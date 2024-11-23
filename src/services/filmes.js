@@ -60,7 +60,6 @@ class ServiceFilmes{
         if(!filmes){
             throw new Error ("Pet não encontrado")
         }
-        filmes.destroy()
 
         return filmes.destroy()
 

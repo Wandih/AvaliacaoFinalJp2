@@ -1,7 +1,6 @@
 const ModelFilmesLoc = require ('../models/filmesloc')
-const bcrypt = require('bcrypt')
-const SALT = 12
-const jwt = require('jsonwebtoken')
+const ModelFilmes = require('./../models/filmes')
+const ModelClientes = require('./../models/clientes')
 
 class ServiceFilmesLoc{
 
@@ -18,19 +17,29 @@ class ServiceFilmesLoc{
 
         }
 
+        const filme = await ModelFilmes.findByPk(idFilme)
+        if(!filme){
+            throw new Error('Filme não encontrado')
+        }
+
+        const cliente = await ModelClientes.findByPk(idCliente)
+        if(!cliente){
+            throw new Error('Cliente não encontrado')
+        }
+        
+
         
         return ModelFilmesLoc.create(
             {
              idFilme: idFilme, 
              idCliente: idCliente,
              DataLoc: DataLoc,
-             DataDev: DataDev
-
+             DataDev: null
             })
 
     }
 
-    async DevolverFilme(id){
+    async DevolverFilme(id, DataDev){
 
         if(!id){
             throw new Error("Favor informar o ID")
@@ -40,9 +49,11 @@ class ServiceFilmesLoc{
         if(!filmesloc){
             throw new Error ("Filme não encontrado")
         }
-        filmesloc.destroy()
 
-        return "Filme devolvido com sucesso"
+        filmesloc.DataDev = DataDev
+        filmesloc.save()
+
+        return filmesloc
 
     }
 

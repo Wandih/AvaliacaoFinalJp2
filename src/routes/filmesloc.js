@@ -5,8 +5,8 @@ const auth = require('../middleware/auth');
 const routerFilmesLoc = express.Router();
 
 routerFilmesLoc.get('/', ControlerFilmesLoc.GetFilmesLoc)
-routerFilmesLoc.post('/locar', ControlerFilmesLoc.LocarFilme)
-routerFilmesLoc.delete('/devolver/:id', ControlerFilmesLoc.DevolverFilme)
+routerFilmesLoc.post('/locar/:idFilme/:idCliente', auth, ControlerFilmesLoc.LocarFilme)
+routerFilmesLoc.delete('/devolver/:id', auth, ControlerFilmesLoc.DevolverFilme)
 
 
 module.exports = routerFilmesLoc

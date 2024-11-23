@@ -1,4 +1,6 @@
 const database = require('../config/database')
+const filmes = require('./filmes')
+const clientes = require('./clientes')
 
 class ModelFilmesLoc{
     
@@ -11,32 +13,48 @@ class ModelFilmesLoc{
                 autoIncrement: true
 
             },
+            
+            DataLoc: {
+
+                type: database.db.Sequelize.DATE
+
+            },
+            DataDev: {
+
+                type: database.db.Sequelize.DATE
+
+            },
+            
             idFilme: {
 
                 type: database.db.Sequelize.INTEGER,
-                unique: true
+                references: {
+                    model: filmes,
+                    key: 'id'
+                }
 
             },
             idCliente: {
 
                 type: database.db.Sequelize.INTEGER,
-                unique: true
-
-            }, 
-            DataLoc: {
-
-                type: database.db.Sequelize.STRING
-
-            },
-            DataDev: {
-
-                type: database.db.Sequelize.STRING
+                references: {
+                    model: clientes,
+                    key: 'id'
+                }
 
             }
 
-
             
         })
+
+        this.model.belongsTo(filmes, {
+            foreignKey: 'idFilme'
+        })
+
+        this.model.belongsTo(clientes, {
+            foreignKey: 'idCliente'
+        })
+
     }
 
    

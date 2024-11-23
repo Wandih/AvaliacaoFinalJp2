@@ -64,9 +64,10 @@ class ServiceClientes{
         if(!clientes){
             throw new Error ("Cliente não encontrado")
         }
-        clientes.destroy()
-
+        
         return clientes.destroy()
+
+        
 
     }
 
